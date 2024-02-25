@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "alert-app"
+version = "0.1.0"
+description = ""
+authors = ["SzymKam <szymon15kaminski@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.0.2"
+graphene = "^3.3"
+graphene-django = "^3.2.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
