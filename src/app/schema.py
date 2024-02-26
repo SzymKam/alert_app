@@ -95,22 +95,19 @@ class UpdateRescueContact(graphene.Mutation):
         return UpdateRescueContact(ok=True, rescue_contact=update_rescue_contact)
 
 
-# class DeleteRescueContact(graphene.Mutation):
-#     ok = graphene.Boolean()
-#
-#     class Arguments:
-#         id = graphene.ID()
-#
-#     def mutate(self, info, id):
-#         delete_rescue_contact = RescueContact.objects.get(id=id)
-#         delete_rescue_contact.delete()
-#         return DeleteRescueContact(ok=True)
-#
-#
-#
+class DeleteRescueContact(graphene.Mutation):
+    ok = graphene.Boolean()
+
+    class Arguments:
+        id = graphene.ID()
+
+    def mutate(self, info, id):
+        delete_rescue_contact = RescueContact.objects.get(id=id)
+        delete_rescue_contact.delete()
+        return DeleteRescueContact(ok=True)
+
+
 class Mutation(graphene.ObjectType):
     create_rescue_contact = CreateRescueContact.Field()
     update_rescue_contact = UpdateRescueContact.Field()
-
-
-#     delete_rescue_contact = DeleteRescueContact.Field()
+    delete_rescue_contact = DeleteRescueContact.Field()
