@@ -12,6 +12,7 @@ graphene = "^3.3"
 graphene-django = "^3.2.0"
 pre-commit = "^3.6.2"
 python-decouple = "^3.8"
+twilio = "^8.13.0"
 
 
 [build-system]
