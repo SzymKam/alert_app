@@ -1,7 +1,7 @@
 import graphene
 from graphene_django import DjangoObjectType
 
-from .models import RescueContact
+from ..models import RescueContact
 
 
 class RescueContactType(DjangoObjectType):
@@ -27,6 +27,8 @@ class CreateRescueContact(graphene.Mutation):
     class Arguments:
         first_name = graphene.String(required=True)
         last_name = graphene.String(required=True)
+        email = graphene.String(required=True)
+        phone = graphene.String(required=True)
         medical_qualifications = graphene.String()
         is_driver = graphene.Boolean()
         has_vehicle_driving_privileges = graphene.Boolean()
@@ -43,6 +45,8 @@ class CreateRescueContact(graphene.Mutation):
         has_vehicle_driving_privileges,
         is_navigator,
         is_planner,
+        email,
+        phone,
     ):
         new_rescue_contact = RescueContact(
             first_name=first_name,
@@ -52,6 +56,8 @@ class CreateRescueContact(graphene.Mutation):
             has_vehicle_driving_privileges=has_vehicle_driving_privileges,
             is_navigator=is_navigator,
             is_planner=is_planner,
+            email=email,
+            phone=phone,
         )
         new_rescue_contact.save()
         return CreateRescueContact(rescue_contact=new_rescue_contact)
@@ -65,6 +71,8 @@ class UpdateRescueContact(graphene.Mutation):
         id = graphene.ID()
         first_name = graphene.String()
         last_name = graphene.String()
+        email = graphene.String()
+        phone = graphene.String()
         medical_qualifications = graphene.String()
         is_driver = graphene.Boolean()
         has_vehicle_driving_privileges = graphene.Boolean()
@@ -82,6 +90,8 @@ class UpdateRescueContact(graphene.Mutation):
         is_navigator,
         is_planner,
         id,
+        email,
+        phone,
     ):
         update_rescue_contact = RescueContact.objects.get(id=id)
         update_rescue_contact.first_name = first_name
@@ -91,6 +101,8 @@ class UpdateRescueContact(graphene.Mutation):
         update_rescue_contact.has_vehicle_driving_privileges = has_vehicle_driving_privileges
         update_rescue_contact.is_navigator = is_navigator
         update_rescue_contact.is_planner = is_planner
+        update_rescue_contact.email = email
+        update_rescue_contact.phone = phone
         update_rescue_contact.save()
         return UpdateRescueContact(ok=True, rescue_contact=update_rescue_contact)
 
