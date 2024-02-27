@@ -126,3 +126,25 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 GRAPHENE = {"SCHEMA": "core.schema.schema"}
+
+"""sending email from server"""
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.sendgrid.net"
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+
+if config("EMAIL_HOST_USER") is None and config("EMAIL_HOST_PASSWORD") is None and config("DEFAULT_FROM_EMAIL") is None:
+    """sending emails to app"""
+    EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+    EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
+
+
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
+
+
+"""twilio sms settings"""
+TWILIO_ACCOUNT_SID = config("TWILIO_ACCOUNT_SID")
+TWILIO_AUTH_TOKEN = config("TWILIO_AUTH_TOKEN")
+TWILIO_PHONE_NUMBER = config("TWILIO_PHONE_NUMBER")
