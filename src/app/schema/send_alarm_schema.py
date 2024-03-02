@@ -7,7 +7,7 @@ class SendAlarm(graphene.Mutation):
     confirmation = graphene.String()
 
     class Arguments:
-        ids = graphene.List(graphene.Int)
+        ids = graphene.List(graphene.String)
         message = graphene.String()
 
     def mutate(self, info, ids, message):
