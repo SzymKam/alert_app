@@ -1,20 +1,20 @@
-from django.db import models
+from mongoengine import BooleanField, Document, EmailField, StringField
 
 from .constants import QUALIFICATIONS
 
 
-class RescueContact(models.Model):
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    medical_qualifications = models.CharField(
+class RescueContact(Document):
+    first_name = StringField(max_length=50)
+    last_name = StringField(max_length=50)
+    medical_qualifications = StringField(
         max_length=50, choices=QUALIFICATIONS, default="Qualified first aid", help_text="Qualifications"
     )
-    is_driver = models.BooleanField(default=False)
-    has_vehicle_driving_privileges = models.BooleanField(default=False)
-    is_navigator = models.BooleanField(default=False)
-    is_planner = models.BooleanField(default=False)
-    email = models.EmailField(max_length=254, unique=True, null=True, blank=True)
-    phone = models.CharField(max_length=12, unique=True, null=True, blank=True)
+    is_driver = BooleanField(default=False)
+    has_vehicle_driving_privileges = BooleanField(default=False)
+    is_navigator = BooleanField(default=False)
+    is_planner = BooleanField(default=False)
+    email = EmailField(max_length=254, unique=True)
+    phone = StringField(max_length=12, unique=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} - {self.medical_qualifications}"
