@@ -11,13 +11,13 @@ class RescueContactType(MongoengineObjectType):
 
 
 class Query(graphene.ObjectType):
-    list_mongo_rescue_contacts = graphene.List(RescueContactType)
-    get_mongo_rescue_contacts = graphene.Field(RescueContactType, id=graphene.String())
+    list_rescue_contacts = graphene.List(RescueContactType)
+    get_rescue_contacts = graphene.Field(RescueContactType, id=graphene.String())
 
-    def resolve_list_mongo_rescue_contacts(self, info):
+    def resolve_list_rescue_contacts(self, info):
         return RescueContact.objects.all()
 
-    def resolve_get_mongo_rescue_contacts(self, info, id):
+    def resolve_get_rescue_contacts(self, info, id):
         return RescueContact.objects.get(id=id)
 
 
@@ -120,6 +120,6 @@ class DeleteRescueContact(graphene.Mutation):
 
 
 class Mutation(graphene.ObjectType):
-    create_mongo_rescue_contact = CreateRescueContact.Field()
-    update_mongo_rescue_contact = UpdateRescueContact.Field()
-    delete_mongo_rescue_contact = DeleteRescueContact.Field()
+    create_rescue_contact = CreateRescueContact.Field()
+    update_rescue_contact = UpdateRescueContact.Field()
+    delete_rescue_contact = DeleteRescueContact.Field()
