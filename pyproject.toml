@@ -15,6 +15,7 @@ python-decouple = "^3.8"
 twilio = "^8.13.0"
 mongoengine = "^0.27.0"
 graphene-mongo = "^0.4.2"
+django-environ = "^0.11.2"
 
 
 [build-system]
