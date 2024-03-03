@@ -43,10 +43,9 @@ class SendingAlarmMessages:
         for contact in self.contacts:
             try:
                 client.messages.create(to=contact.phone, from_=settings.TWILIO_PHONE_NUMBER, body=self.__message)
-                confirmation.update({client: "Sent"})
-            except TwilioException as e:
-                print(f"TwilioException: {e}")
-                confirmation.update({client: f"Not sent: error {e}"})
+                confirmation.update({client: f"Sent to {contact}"})
+            except TwilioException as error:
+                confirmation.update({client: f"Not sent: {error}"})
                 continue
 
         return confirmation
