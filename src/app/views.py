@@ -12,12 +12,13 @@ class SendingAlarmMessages:
     def __init__(self, ids, message):
         self.__ids = ids
         self.__message = message
-        # self.__e
 
     def main(self):
         self.__get_contacts()
+        email_result = self.__send_email()
+        sms_result = self.__send_sms()
 
-        return self.contacts
+        return {"email": email_result, "sms": sms_result}
 
     def __get_contacts(self):
         self.contacts = RescueContact.objects.filter(id__in=self.__ids)
@@ -31,19 +32,21 @@ class SendingAlarmMessages:
                 to=[contact.email for contact in self.contacts],
             )
             message.send()
-            return True
+            return "Email messages sent successfully"
 
-        except SMTPException as e:
-            print(f"SMTPException: {e}")
-            return e
+        except SMTPException as error:
+            return f"Error sending emails: {error}"
 
     def __send_sms(self):
-        # confirmation = dict()
+        confirmation = dict()
         client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
         for contact in self.contacts:
             try:
                 client.messages.create(to=contact.phone, from_=settings.TWILIO_PHONE_NUMBER, body=self.__message)
-
+                confirmation.update({client: "Sent"})
             except TwilioException as e:
                 print(f"TwilioException: {e}")
+                confirmation.update({client: f"Not sent: error {e}"})
                 continue
+
+        return confirmation
