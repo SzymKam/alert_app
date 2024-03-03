@@ -1,14 +1,17 @@
+import os
 from pathlib import Path
 
 import mongoengine
-from decouple import config
+
+from .alert_app_env import env
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env.read_env(os.path.join(BASE_DIR.parent, ".env"))
 
-SECRET_KEY = config("SECRET_KEY")
+SECRET_KEY = env("SECRET_KEY")
 
-DEBUG = config("DEBUG", default=False)
+DEBUG = env("DEBUG")
 
 ALLOWED_HOSTS = []
 
@@ -58,7 +61,7 @@ TEMPLATES = [
 WSGI_APPLICATION = "core.wsgi.application"
 
 """mongo DB connect"""
-connect = mongoengine.connect(db=config("MONGODB_NAME"), host=config("MONGODB_HOST"), port=int(config("MONGODB_PORT")))
+connect = mongoengine.connect(db=env("MONGODB_NAME"), host=env("MONGODB_HOST"), port=int(env("MONGODB_PORT")))
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -96,18 +99,18 @@ EMAIL_HOST = "smtp.sendgrid.net"
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 
-if config("EMAIL_HOST_USER") is None and config("EMAIL_HOST_PASSWORD") is None and config("DEFAULT_FROM_EMAIL") is None:
+if env("EMAIL_HOST_USER") is None and env("EMAIL_HOST_PASSWORD") is None and env("DEFAULT_FROM_EMAIL") is None:
     """sending emails to app"""
     EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
     EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
 
 
-EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
-EMAIL_HOST_USER = config("EMAIL_HOST_USER")
-DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL")
 
 
 """twilio sms settings"""
-TWILIO_ACCOUNT_SID = config("TWILIO_ACCOUNT_SID")
-TWILIO_AUTH_TOKEN = config("TWILIO_AUTH_TOKEN")
-TWILIO_PHONE_NUMBER = config("TWILIO_PHONE_NUMBER")
+TWILIO_ACCOUNT_SID = env("TWILIO_ACCOUNT_SID")
+TWILIO_AUTH_TOKEN = env("TWILIO_AUTH_TOKEN")
+TWILIO_PHONE_NUMBER = env("TWILIO_PHONE_NUMBER")
