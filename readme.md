@@ -18,7 +18,10 @@
 
 ## Project Overview
 
-This project is designed to facilitate the transmission of alarm messages to rescuers when an emergency call is received. It is developed using Django 5.0.2, GraphQL, and MongoDB. The project operates entirely through an API, with no graphical user interface. Users can send alarm messages to selected contacts, and all Create, Read, Update, and Delete operations on the model are accessible through the API.
+This project is designed to facilitate the transmission of alarm messages to rescuers when an emergency call is
+received. It is developed using Django 5.0.2, GraphQL, and MongoDB. The project operates entirely through an API,
+with no graphical user interface. Users can send alarm messages to selected contacts, and all Create, Read, Update,
+and Delete operations on the model are accessible through the API.
 
 
 ## Technologies:
