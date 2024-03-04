@@ -1,4 +1,5 @@
 import os
+import sys
 from pathlib import Path
 
 import mongoengine
@@ -15,7 +16,6 @@ DEBUG = env("DEBUG")
 
 ALLOWED_HOSTS = []
 
-
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -25,10 +25,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 ]
 
-INSTALLED_APPS += [
-    "app",
-    "graphene_django",
-]
+INSTALLED_APPS += ["app", "graphene_django", "django_extensions"]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -78,7 +75,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "UTC"
@@ -104,13 +100,19 @@ if env("EMAIL_HOST_USER") is None and env("EMAIL_HOST_PASSWORD") is None and env
     EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
     EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
 
-
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 EMAIL_HOST_USER = env("EMAIL_HOST_USER")
 DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL")
-
 
 """twilio sms settings"""
 TWILIO_ACCOUNT_SID = env("TWILIO_ACCOUNT_SID")
 TWILIO_AUTH_TOKEN = env("TWILIO_AUTH_TOKEN")
 TWILIO_PHONE_NUMBER = env("TWILIO_PHONE_NUMBER")
+
+if "test" in sys.argv:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "test_db.sqlite3",
+        }
+    }
