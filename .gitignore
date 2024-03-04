@@ -142,3 +142,4 @@ GitHub.sublime-settings
 src/core/__pycache__/
 src/core/__pycache__/settings.cpython-312.pyc
 src/core/__pycache__/*.pyc
+src/core/__pycache__/wsgi.cpython-312.pyc
