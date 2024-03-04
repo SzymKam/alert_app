@@ -30,10 +30,10 @@ class CreateRescueContact(graphene.Mutation):
         email = graphene.String(required=True)
         phone = graphene.String(required=True)
         medical_qualifications = graphene.String()
-        is_driver = graphene.Boolean()
-        has_vehicle_driving_privileges = graphene.Boolean()
-        is_navigator = graphene.Boolean()
-        is_planner = graphene.Boolean()
+        driver = graphene.Boolean()
+        driving_privileges = graphene.Boolean()
+        navigator = graphene.Boolean()
+        planner = graphene.Boolean()
 
     def mutate(
         self,
@@ -41,10 +41,10 @@ class CreateRescueContact(graphene.Mutation):
         first_name,
         last_name,
         medical_qualifications,
-        is_driver,
-        has_vehicle_driving_privileges,
-        is_navigator,
-        is_planner,
+        driver,
+        driving_privileges,
+        navigator,
+        planner,
         email,
         phone,
     ):
@@ -52,10 +52,10 @@ class CreateRescueContact(graphene.Mutation):
             first_name=first_name,
             last_name=last_name,
             medical_qualifications=medical_qualifications,
-            is_driver=is_driver,
-            has_vehicle_driving_privileges=has_vehicle_driving_privileges,
-            is_navigator=is_navigator,
-            is_planner=is_planner,
+            driver=driver,
+            driving_privileges=driving_privileges,
+            navigator=navigator,
+            planner=planner,
             email=email,
             phone=phone,
         )
@@ -74,10 +74,10 @@ class UpdateRescueContact(graphene.Mutation):
         email = graphene.String()
         phone = graphene.String()
         medical_qualifications = graphene.String()
-        is_driver = graphene.Boolean()
-        has_vehicle_driving_privileges = graphene.Boolean()
-        is_navigator = graphene.Boolean()
-        is_planner = graphene.Boolean()
+        driver = graphene.Boolean()
+        driving_privileges = graphene.Boolean()
+        navigator = graphene.Boolean()
+        planner = graphene.Boolean()
 
     def mutate(
         self,
@@ -85,10 +85,10 @@ class UpdateRescueContact(graphene.Mutation):
         first_name,
         last_name,
         medical_qualifications,
-        is_driver,
-        has_vehicle_driving_privileges,
-        is_navigator,
-        is_planner,
+        driver,
+        driving_privileges,
+        navigator,
+        planner,
         id,
         email,
         phone,
@@ -97,10 +97,10 @@ class UpdateRescueContact(graphene.Mutation):
         update_rescue_contact.first_name = first_name
         update_rescue_contact.last_name = last_name
         update_rescue_contact.medical_qualifications = medical_qualifications
-        update_rescue_contact.is_driver = is_driver
-        update_rescue_contact.has_vehicle_driving_privileges = has_vehicle_driving_privileges
-        update_rescue_contact.is_navigator = is_navigator
-        update_rescue_contact.is_planner = is_planner
+        update_rescue_contact.driver = driver
+        update_rescue_contact.driving_privileges = driving_privileges
+        update_rescue_contact.navigator = navigator
+        update_rescue_contact.planner = planner
         update_rescue_contact.email = email
         update_rescue_contact.phone = phone
         update_rescue_contact.save()
