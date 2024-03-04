@@ -14,10 +14,10 @@ class Query(graphene.ObjectType):
     list_rescue_contacts = graphene.List(RescueContactType)
     get_rescue_contacts = graphene.Field(RescueContactType, id=graphene.String())
 
-    def resolve_list_rescue_contacts(self, info):
+    def resolve_list_rescue_contacts(self, info) -> list[RescueContact]:
         return RescueContact.objects.all()
 
-    def resolve_get_rescue_contacts(self, info, id):
+    def resolve_get_rescue_contacts(self, info, id) -> RescueContact:
         return RescueContact.objects.get(id=id)
 
 

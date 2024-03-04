@@ -9,21 +9,21 @@ from .models import RescueContact
 
 
 class SendingAlarmMessages:
-    def __init__(self, ids, message):
+    def __init__(self, ids, message) -> None:
         self.__ids = ids
         self.__message = message
 
-    def main(self):
+    def main(self) -> dict:
         self.__get_contacts()
         email_result = self.__send_email()
         sms_result = self.__send_sms()
 
         return {"email": email_result, "sms": sms_result}
 
-    def __get_contacts(self):
+    def __get_contacts(self) -> None:
         self.contacts = RescueContact.objects.filter(id__in=self.__ids)
 
-    def __send_email(self):
+    def __send_email(self) -> str:
         try:
             message = EmailMessage(
                 subject="Rescue Alert",
@@ -37,7 +37,7 @@ class SendingAlarmMessages:
         except SMTPException as error:
             return f"Error sending emails: {error}"
 
-    def __send_sms(self):
+    def __send_sms(self) -> dict:
         confirmation = dict()
         client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
         for contact in self.contacts:

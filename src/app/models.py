@@ -16,5 +16,5 @@ class RescueContact(Document):
     email = EmailField(max_length=254, unique=True)
     phone = StringField(max_length=12, unique=True)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.first_name} {self.last_name} - {self.medical_qualifications}"
