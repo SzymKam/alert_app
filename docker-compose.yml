@@ -1,0 +1,24 @@
+version: '3'
+services:
+  db:
+    image: mongo
+    container_name: mongo_db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  web:
+    container_name: web_alert_app
+    build:
+      context: .
+      dockerfile: web.Dockerfile
+    command:
+      poetry run python manage.py runserver 0.0.0.0:8000
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+
+volumes:
+  mongodb_data:
