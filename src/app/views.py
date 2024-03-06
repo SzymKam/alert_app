@@ -24,30 +24,34 @@ class SendingAlarmMessages:
         self.contacts = RescueContact.objects.filter(id__in=self.__ids)
 
     def __send_email(self) -> dict:
-        try:
-            message = EmailMessage(
-                subject="Rescue Alert",
-                body=self.__message,
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                to=[contact.email for contact in self.contacts],
-            )
-            message.send()
-            return {"email_sent": "sent successfully"}
+        email_confirmation = dict()
+        for contact in self.contacts:
+            try:
+                message = EmailMessage(
+                    subject="Rescue Alert",
+                    body=self.__message,
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    to=[contact.email],
+                )
+                message.send()
+                email_confirmation.update({"user": contact.email, "info": "sent"})
 
-        except SMTPException as error:
-            return {"email_sent": error}
+            except SMTPException:
+                email_confirmation.update({"user": contact.email, "info": "error"})
+                continue
+
+        return email_confirmation
 
     def __send_sms(self) -> dict:
-        confirmation = dict()
+        sms_confirmation = dict()
         client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
 
         for contact in self.contacts:
             try:
                 client.messages.create(to=contact.phone, from_=settings.TWILIO_PHONE_NUMBER, body=self.__message)
-                confirmation.update({"sent": contact.phone})
-            except TwilioException as error:
-                confirmation.update({"not sent": contact.phone, "error": error})
+                sms_confirmation.update({"user": contact.phone, "info": "sent"})
+            except TwilioException:
+                sms_confirmation.update({"user": contact.phone, "info": "error"})
                 continue
 
-        confirmation = {"sms_sent": confirmation}
-        return confirmation
+        return sms_confirmation
