@@ -3,8 +3,14 @@ import graphene
 from ..views import SendingAlarmMessages
 
 
+class JSONString(graphene.Scalar):
+    @staticmethod
+    def serialize(json_value):
+        return json_value
+
+
 class SendAlarm(graphene.Mutation):
-    confirmation = graphene.String()
+    confirmation = JSONString()
 
     class Arguments:
         ids = graphene.List(graphene.String)
@@ -12,9 +18,9 @@ class SendAlarm(graphene.Mutation):
 
     def mutate(self, info, ids, message):
         sending_alarm = SendingAlarmMessages(ids=ids, message=message)
-        alarmed_contacts = sending_alarm.main()
+        alarmed_result = sending_alarm.main()
 
-        return SendAlarm(confirmation=alarmed_contacts)
+        return SendAlarm(confirmation=alarmed_result)
 
 
 class Mutation(graphene.ObjectType):
