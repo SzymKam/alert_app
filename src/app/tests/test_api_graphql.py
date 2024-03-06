@@ -268,18 +268,22 @@ class RescueContactTestCase(GraphQLTestCase):
         self.assertEqual(content["data"]["deleteRescueContact"]["ok"], True)
         self.assertEqual(len(contacts), 2)
 
-    # @tag('x')
-    # def test_mutation_send_rescue_message(self):
-    #     contacts = RescueContact.objects.all()
-    #
-    #     response = self.query(
-    #         """mutation MyMutation {{
-    #         sendAlarm(ids: "{}", message: "test_message") {{
-    #         confirmation
-    #         }}
-    #         }}""".format(contacts[0].id))
-    #
-    #     result = json.loads(response.content)
-    #     print(result['data']['sendAlarm']['confirmation'])
-    #
-    #     # self.assertEqual()
+    def test_mutation_send_rescue_message(self):
+        contacts = RescueContact.objects.all()
+
+        response = self.query(
+            """mutation MyMutation {{
+            sendAlarm(ids: "{}", message: "test_message") {{
+            confirmation
+            }}
+            }}""".format(
+                contacts[0].id
+            )
+        )
+
+        result = json.loads(response.content)
+
+        self.assertEqual(result["data"]["sendAlarm"]["confirmation"]["email"]["user"], contacts[0].email)
+        self.assertEqual(result["data"]["sendAlarm"]["confirmation"]["email"]["info"], "sent")
+        self.assertEqual(result["data"]["sendAlarm"]["confirmation"]["sms"]["user"], contacts[0].phone)
+        self.assertEqual(result["data"]["sendAlarm"]["confirmation"]["sms"]["info"], "error")
