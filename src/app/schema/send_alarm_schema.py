@@ -14,7 +14,7 @@ class SendAlarm(graphene.Mutation):
         sending_alarm = SendingAlarmMessages(ids=ids, message=message)
         alarmed_contacts = sending_alarm.main()
 
-        return SendAlarm(confirmation=f"Message: {message}; Result: {alarmed_contacts}")
+        return SendAlarm(confirmation=alarmed_contacts)
 
 
 class Mutation(graphene.ObjectType):
