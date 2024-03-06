@@ -65,7 +65,6 @@ class RescueContactTestCase(TestCase):
 
     def test_database_update_object(self):
         old_contact = RescueContact.objects.get(phone=self.contact2.phone)
-        print(old_contact)
 
         old_contact.first_name = "John"
         old_contact.last_name = "Wick"
