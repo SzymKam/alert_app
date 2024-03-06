@@ -41,7 +41,6 @@ class RescueContactTestCase(GraphQLTestCase):
         connection = MongoClient(env("MONGODB_HOST"), int(env("MONGODB_PORT")))
         connection.drop_database("alert_app_db_mongo_test")
 
-    # @tag('x')
     def test_query_return_all_contacts(self):
         response = self.query(
             """query MyQuery {
@@ -107,7 +106,6 @@ class RescueContactTestCase(GraphQLTestCase):
         self.assertEqual(content["data"]["listRescueContacts"][2]["navigator"], self.contact3.navigator)
         self.assertEqual(content["data"]["listRescueContacts"][2]["planner"], self.contact3.planner)
 
-    # @tag('x')
     def test_query_return_one_contact(self):
         contact = RescueContact.objects.get(phone=self.contact1.phone)
 
@@ -146,122 +144,129 @@ class RescueContactTestCase(GraphQLTestCase):
         self.assertEqual(content["data"]["getRescueContacts"]["navigator"], self.contact1.navigator)
         self.assertEqual(content["data"]["getRescueContacts"]["planner"], self.contact1.planner)
 
-    # # @tag('x')
-    # def test_mutation_create_contact(self):
-    #     response = self.query(
-    #         """mutation MyMutation {
-    #         createRescueContact(
-    #         firstName: "API_test_create"
-    #         lastName: "API_test_create"
-    #         phone: "+48111222333"
-    #         email: "fakeemail@gmail.com"
-    #         medicalQualifications: "Nurse"
-    #         driver: true
-    #         drivingPrivileges: true
-    #         navigator: true
-    #         planner: true
-    #         ) {
-    #         rescueContact {
-    #         id
-    #         firstName
-    #         lastName
-    #         phone
-    #         email
-    #         medicalQualifications
-    #         driver
-    #         drivingPrivileges
-    #         navigator
-    #         planner
-    #         }
-    #         }
-    #         }
-    #         """)
-    #
-    #     content = json.loads(response.content)
-    #     contact = RescueContact.objects.get(phone='+48111222333')
-    #
-    #     self.assertResponseNoErrors(response)
-    #     self.assertEqual(content['data']['createRescueContact']['rescueContact']['firstName'], 'API_test_create')
-    #     self.assertEqual(content['data']['createRescueContact']['rescueContact']['firstName'], contact.first_name)
-    #
-    #     self.assertEqual(content['data']['createRescueContact']['rescueContact']['lastName'], 'API_test_create')
-    #     self.assertEqual(content['data']['createRescueContact']['rescueContact']['lastName'], contact.last_name)
-    #
-    #     self.assertEqual(content['data']['createRescueContact']['rescueContact']['phone'], '+48111222333')
-    #     self.assertEqual(content['data']['createRescueContact']['rescueContact']['phone'], contact.phone)
-    #
-    #     self.assertEqual(content['data']['createRescueContact']['rescueContact']['email'], 'fakeemail@gmail.com')
-    #     self.assertEqual(content['data']['createRescueContact']['rescueContact']['email'], contact.email)
-    #
-    #     self.assertEqual(content['data']['createRescueContact']['rescueContact']['medicalQualifications'], 'Nurse')
-    #     self.assertEqual(content['data']['createRescueContact']['rescueContact']['medicalQualifications'], contact.medical_qualifications)
-    #
-    # # @tag('x')
-    # def test_mutation_update_contact(self):
-    #     to_update = RescueContact.objects.get(phone=self.contact1.phone)
-    #
-    #     response = self.query(
-    #         """mutation MyMutation {{
-    #                 updateRescueContact(
-    #                     firstName: "updated"
-    #                     lastName: "updated"
-    #                     phone: "+48999888777"
-    #                     email: "updated@gmail.com"
-    #                     medicalQualifications: "Paramedic"
-    #                     driver: false
-    #                     drivingPrivileges: false
-    #                     navigator: false
-    #                     planner: false
-    #                     id: "{0}"
-    #                     ) {{
-    #                     ok
-    #                     rescueContact {{
-    #                       firstName
-    #                       lastName
-    #                       phone
-    #                       email
-    #                       medicalQualifications
-    #                       driver
-    #                       drivingPrivileges
-    #                       navigator
-    #                       planner
-    #                       id
-    #                     }}
-    #                     }}
-    #                     }}""".format(to_update.id))
-    #
-    #     content = json.loads(response.content)
-    #
-    #     self.assertResponseNoErrors(response)
-    #     self.assertEqual(content['data']['updateRescueContact']['ok'], True)
-    #     self.assertEqual(content['data']['updateRescueContact']['rescueContact']['firstName'], "updated")
-    #     self.assertEqual(content['data']['updateRescueContact']['rescueContact']['lastName'], "updated")
-    #     self.assertEqual(content['data']['updateRescueContact']['rescueContact']['phone'], "+48999888777")
-    #     self.assertEqual(content['data']['updateRescueContact']['rescueContact']['email'], "updated@gmail.com")
-    #     self.assertEqual(content['data']['updateRescueContact']['rescueContact']['medicalQualifications'], "Paramedic")
-    #     self.assertEqual(content['data']['updateRescueContact']['rescueContact']['driver'], False)
-    #     self.assertEqual(content['data']['updateRescueContact']['rescueContact']['drivingPrivileges'], False)
-    #     self.assertEqual(content['data']['updateRescueContact']['rescueContact']['navigator'], False)
-    #     self.assertEqual(content['data']['updateRescueContact']['rescueContact']['planner'], False)
-    #
-    # # @tag('x')
-    # def test_mutation_delete_contact(self):
-    #     to_delete = RescueContact.objects.get(phone=self.contact3.phone)
-    #
-    #     response = self.query(
-    #         """mutation MyMutation {{
-    #         deleteRescueContact(id: "{0}") {{
-    #         ok
-    #         }}
-    #         }}
-    #         """.format(to_delete.id))
-    #
-    #     content = json.loads(response.content)
-    #     contacts = RescueContact.objects.all()
-    #
-    #     self.assertResponseNoErrors(response)
-    #     self.assertEqual(content['data']['deleteRescueContact']['ok'], True)
-    #     self.assertEqual(len(contacts), 2)
+    def test_mutation_create_contact(self):
+        response = self.query(
+            """mutation MyMutation {
+            createRescueContact(
+            firstName: "API_test_create"
+            lastName: "API_test_create"
+            phone: "+48111222333"
+            email: "fakeemail@gmail.com"
+            medicalQualifications: "Nurse"
+            driver: true
+            drivingPrivileges: true
+            navigator: true
+            planner: true
+            ) {
+            rescueContact {
+            id
+            firstName
+            lastName
+            phone
+            email
+            medicalQualifications
+            driver
+            drivingPrivileges
+            navigator
+            planner
+            }
+            }
+            }
+            """
+        )
+
+        content = json.loads(response.content)
+        contact = RescueContact.objects.get(phone="+48111222333")
+
+        self.assertResponseNoErrors(response)
+        self.assertEqual(content["data"]["createRescueContact"]["rescueContact"]["firstName"], "API_test_create")
+        self.assertEqual(content["data"]["createRescueContact"]["rescueContact"]["firstName"], contact.first_name)
+
+        self.assertEqual(content["data"]["createRescueContact"]["rescueContact"]["lastName"], "API_test_create")
+        self.assertEqual(content["data"]["createRescueContact"]["rescueContact"]["lastName"], contact.last_name)
+
+        self.assertEqual(content["data"]["createRescueContact"]["rescueContact"]["phone"], "+48111222333")
+        self.assertEqual(content["data"]["createRescueContact"]["rescueContact"]["phone"], contact.phone)
+
+        self.assertEqual(content["data"]["createRescueContact"]["rescueContact"]["email"], "fakeemail@gmail.com")
+        self.assertEqual(content["data"]["createRescueContact"]["rescueContact"]["email"], contact.email)
+
+        self.assertEqual(content["data"]["createRescueContact"]["rescueContact"]["medicalQualifications"], "Nurse")
+        self.assertEqual(
+            content["data"]["createRescueContact"]["rescueContact"]["medicalQualifications"],
+            contact.medical_qualifications,
+        )
+
+    def test_mutation_update_contact(self):
+        to_update = RescueContact.objects.get(phone=self.contact1.phone)
+
+        response = self.query(
+            """mutation MyMutation {{
+                    updateRescueContact(
+                        firstName: "updated"
+                        lastName: "updated"
+                        phone: "+48999888777"
+                        email: "updated@gmail.com"
+                        medicalQualifications: "Paramedic"
+                        driver: false
+                        drivingPrivileges: false
+                        navigator: false
+                        planner: false
+                        id: "{0}"
+                        ) {{
+                        ok
+                        rescueContact {{
+                          firstName
+                          lastName
+                          phone
+                          email
+                          medicalQualifications
+                          driver
+                          drivingPrivileges
+                          navigator
+                          planner
+                          id
+                        }}
+                        }}
+                        }}""".format(
+                to_update.id
+            )
+        )
+
+        content = json.loads(response.content)
+
+        self.assertResponseNoErrors(response)
+        self.assertEqual(content["data"]["updateRescueContact"]["ok"], True)
+        self.assertEqual(content["data"]["updateRescueContact"]["rescueContact"]["firstName"], "updated")
+        self.assertEqual(content["data"]["updateRescueContact"]["rescueContact"]["lastName"], "updated")
+        self.assertEqual(content["data"]["updateRescueContact"]["rescueContact"]["phone"], "+48999888777")
+        self.assertEqual(content["data"]["updateRescueContact"]["rescueContact"]["email"], "updated@gmail.com")
+        self.assertEqual(content["data"]["updateRescueContact"]["rescueContact"]["medicalQualifications"], "Paramedic")
+        self.assertEqual(content["data"]["updateRescueContact"]["rescueContact"]["driver"], False)
+        self.assertEqual(content["data"]["updateRescueContact"]["rescueContact"]["drivingPrivileges"], False)
+        self.assertEqual(content["data"]["updateRescueContact"]["rescueContact"]["navigator"], False)
+        self.assertEqual(content["data"]["updateRescueContact"]["rescueContact"]["planner"], False)
+
+    def test_mutation_delete_contact(self):
+        to_delete = RescueContact.objects.get(phone=self.contact3.phone)
+
+        response = self.query(
+            """mutation MyMutation {{
+            deleteRescueContact(id: "{0}") {{
+            ok
+            }}
+            }}
+            """.format(
+                to_delete.id
+            )
+        )
+
+        content = json.loads(response.content)
+        contacts = RescueContact.objects.all()
+
+        self.assertResponseNoErrors(response)
+        self.assertEqual(content["data"]["deleteRescueContact"]["ok"], True)
+        self.assertEqual(len(contacts), 2)
 
     # @tag('x')
     # def test_mutation_send_rescue_message(self):
