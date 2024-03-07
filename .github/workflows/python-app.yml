@@ -43,6 +43,10 @@ jobs:
       run: |
         cd src
         poetry run python manage.py test
+      env:
+        MONGODB_HOST: ${{ secrets.MONGODB_HOST }}
+        MONGODB_PORT: ${{ secrets.MONGODB_PORT }}
+        MONGODB_NAME: ${{ secrets.MONGODB_NAME }}
 
     - name: Run Bandit
       run: |
