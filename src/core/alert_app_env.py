@@ -11,6 +11,6 @@ env = Env(
     TWILIO_AUTH_TOKEN=(str, "your_twilio_auth_token"),
     TWILIO_PHONE_NUMBER=(str, "your_twilio_phone_number"),
     MONGODB_NAME=(str, "alert_app_db_mongo"),
-    MONGODB_HOST=(str, "db"),
+    MONGODB_HOST=(str, "mongodb"),
     MONGODB_PORT=(int, 27017),
 )
