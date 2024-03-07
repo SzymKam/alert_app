@@ -18,9 +18,10 @@ jobs:
         python-version: [3.12]
 
     services:
-      image: mongo
-      ports:
-        - 27017:27017
+      postgres:
+        image: mongo
+        ports:
+          - 27017:27017
 
     steps:
     - uses: actions/checkout@v3
