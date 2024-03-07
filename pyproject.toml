@@ -26,3 +26,8 @@ safety = "^3.0.1"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.bandit]
+exclude_dirs = ["*/tests/*", "src/app/tests"]
+tests = ["B201", "B301"]
+skips = ["B101", "B601"]
