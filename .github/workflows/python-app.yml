@@ -39,10 +39,10 @@ jobs:
       run: |
           poetry install
 
-#    - name: Run Tests
-#      run: |
-#        cd src
-#        poetry run python manage.py test
+    - name: Run Tests
+      run: |
+        cd src
+        poetry run python manage.py test
 
     - name: Run Bandit
       run: |
